@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin OTP Login | Blood Bank</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="navbar">
+        <h1>🔐 Admin OTP Login</h1>
+        <span class="tag">Hospital Access</span>
+    </div>
+
+    <p class="subtitle">OTP-based secure admin login</p>
+
+    <div id="messageBox"></div>
+
+    <!-- STEP 1: EMAIL -->
+    <form id="emailForm">
+        <input type="email" id="adminEmail" placeholder="Admin Email" required>
+        <button type="submit">Send OTP</button>
+    </form>
+
+    <!-- STEP 2: OTP -->
+    <form id="otpForm" style="display:none;">
+        <input type="number" id="otpInput" placeholder="Enter OTP" required>
+        <button type="submit">Verify OTP</button>
+    </form>
+
+</div>
+
+<script>
+
+/* EMAILJS INITIALIZATION */
+emailjs.init("LfZYO2nhT8-xwjd09");
+
+let generatedOTP = null;
+
+/* SEND OTP */
+document.getElementById("emailForm").addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    const email = document.getElementById("adminEmail").value;
+
+    generatedOTP = Math.floor(100000 + Math.random() * 900000);
+
+    emailjs.send(
+        "service_pbqwikc",
+        "template_gruktff",
+        {
+            email: email,
+            passcode: generatedOTP,
+            time: "15 minutes"
+        }
+    )
+
+    .then(function () {
+
+        showMsg("✅ OTP sent to your email", "success");
+
+        document.getElementById("emailForm").style.display = "none";
+
+        document.getElementById("otpForm").style.display = "block";
+    })
+
+    .catch(function (error) {
+
+        showMsg("❌ Failed to send OTP", "error");
+
+        console.log(error);
+    });
+
+});
+
+/* VERIFY OTP */
+document.getElementById("otpForm").addEventListener("submit", function (e) {
+
+    e.preventDefault();
+
+    const enteredOTP = document.getElementById("otpInput").value;
+
+    if (enteredOTP == generatedOTP) {
+
+        localStorage.setItem("USER_ROLE", "admin");
+
+        window.location.href = "admin.html";
+
+    } else {
+
+        showMsg("❌ Invalid OTP", "error");
+    }
+
+});
+
+/* MESSAGE FUNCTION */
+function showMsg(text, type) {
+
+    const box = document.getElementById("messageBox");
+
+    box.innerText = text;
+
+    box.className = type;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Donor Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="navbar">
+        <h1>🩸 Donor Portal</h1>
+        <span class="tag role-donor">Donor</span>
+    </div>
+
+    <p class="subtitle">Register and help save lives</p>
+
+    <div id="messageBox"></div>
+
+    <form id="donorForm">
+
+    <input type="text" id="name" placeholder="Name" required>
+
+    <input type="number" id="age" placeholder="Age" required>
+
+    <select id="bloodGroup" required>
+        <option value="">Select Blood Group</option>
+        <option>A+</option><option>A-</option>
+        <option>B+</option><option>B-</option>
+        <option>O+</option><option>O-</option>
+        <option>AB+</option><option>AB-</option>
+    </select>
+
+    <input type="text" id="city" placeholder="City" required>
+
+    <input type="tel" id="phone" placeholder="Phone" required>
+
+    <input type="email" id="email" placeholder="Email" required>
+
+    <button type="submit">Register Donor</button>
+
+</form>
+
+
+</div>
+
+<script>
+localStorage.setItem("USER_ROLE", "donor");
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
